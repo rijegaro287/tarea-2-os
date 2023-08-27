@@ -7,16 +7,46 @@
   <title>Procesamiento de imágenes</title>
   <base href="./">
 
-  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 
-<body>
-  <h1>Hola</h1>
+<body class="container-sm my-5 mx-auto">
+  <h1 class="text-center mb-5">Ecualización de histograma</h1>
 
+  <div class="d-flex flex-column justify-content-between gap-5">
+    <button id="upload-button" type="button" class="btn btn-primary">Buscar imagen...</button>
+    <input id="file-input" type="file" class="form-control d-none" accept="image/*">
 
-  <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+    <div class="align-self-center d-flex justify-content-between">
+      <div class="d-flex flex-column justify-content-center gap-4 w-50">
+        <p class="text-center fs-4 m-0">Imagen seleccionada</p>
 
-  <script src="./main.js"></script>
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <img id="uploaded-image" src="./assets/unknown.png" class="w-75">
+        </div>
+      </div>
+
+      <div class="d-flex flex-column justify-content-center gap-4 w-50">
+        <p class="text-center fs-4 m-0">Imagen procesada</p>
+
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <img id="processed-image" src="./assets/unknown.png" class="w-75">
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-around gap-3">
+      <button id="process-button" type="button" class="btn btn-success ml-3 w-100" disabled>Procesar imagen</button>
+      <button id="cancel-button" type="button" class="btn btn-danger ml-3 w-100" disabled>Cancelar</button>
+    </div>
+
+  </div>
+
+  <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module" src="./main.js"></script>
+  <script type="module" src="./Services/request.js"></script>
 </body>
 
 </html>
