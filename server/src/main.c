@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "processing.h"
 #include "helpers.h"
+#include "processing.h"
 
 int main()
 {
