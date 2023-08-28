@@ -24,8 +24,8 @@ void get_color_sum(char* path, double* color_sum) {
     exit(1);
   }
 
-  size_t img_size = width * height * channels;
-  for (size_t i = 0; i < (img_size - 2); i++) {
+  uint64_t img_size = width * height * channels;
+  for (uint64_t i = 0; i < (img_size - 2); i++) {
     color_sum[0] += ((double)img[i]) / 255;
     color_sum[1] += ((double)img[i + 1]) / 255;
     color_sum[2] += ((double)img[i + 2]) / 255;
