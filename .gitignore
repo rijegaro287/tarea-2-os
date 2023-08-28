@@ -1,5 +1,11 @@
 .vscode
 
+server/build
+server/CMakeFiles
+server/CMakeCache.txt
+server/cmake_install.cmake
+server/Makefile
+
 client/node_modules
 client/build
 client/.env

@@ -6,8 +6,8 @@ function testAPI() {
   });
 }
 
-function sendImage(url: string, image: FormData) {
-  return fetch(`${API_URL}/${url}`, {
+function sendImage(image: FormData) {
+  return fetch(`${API_URL}/process`, {
     method: 'POST',
     headers: { 'Content-Type': 'image/*' },
     body: image

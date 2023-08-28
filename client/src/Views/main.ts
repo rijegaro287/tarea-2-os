@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+
   uploadButton.addEventListener('click', () => { fileInput.click() });
+
 
   fileInput.addEventListener('change', () => {
     if (!fileInput.files) { return; }
@@ -41,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     processButton.scrollIntoView();
   });
 
+
   processButton.addEventListener('click', async () => {
     if (!fileInput.files) { return; }
 
@@ -49,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const imageFormData = new FormData();
     imageFormData.append('file', image);
 
-    await sendImage('process', imageFormData)
+    await sendImage(imageFormData)
       .then((response) => {
         console.log(response);
         return response.json();
