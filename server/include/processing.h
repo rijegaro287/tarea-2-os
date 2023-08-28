@@ -1,9 +1,8 @@
-// #pragma once
+#pragma once
 
-// #include <opencv2/highgui/highgui_c.h>
-// #include <stdio.h> 
-
-// using namespace cv;
-// using namespace std;
-
-// void read_image(string path);
+/**
+* @brief Calculates the sum of the RGB values of each pixel in an image.
+* @param path Path to the image.
+* @param color_sum Pointer to an array of 3 doubles where the sum of each RGB value will be stored.
+*/
+void get_color_sum(char* path, double* color_sum);
