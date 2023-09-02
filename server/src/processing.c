@@ -18,7 +18,6 @@ void get_color_sum(char* path, double* color_sum) {
     exit(1);
   }
 
-
   if (channels > 3) {
     printf("Image has more than 3 channels\n");
     exit(1);

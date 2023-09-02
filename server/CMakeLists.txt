@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-
-set(CMAKE_CXX_STANDARD 11)
-
 project(ImageServer)
+
+set(CMAKE_C_COMPILER /usr/bin/g++)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -14,7 +13,7 @@ set(
   src/helpers.c
 )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 add_executable(ImageServer ${SOURCES})
 

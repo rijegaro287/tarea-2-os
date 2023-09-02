@@ -6,8 +6,8 @@
 
 int main()
 {
-  double* color_sum;
-  get_color_sum("./fondo.jpg", color_sum);
+  double color_sum[3];
+  get_color_sum("./persona1.jpg", color_sum);
 
   uint8_t max_index = find_max_index(color_sum, 3);
 
