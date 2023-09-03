@@ -6,6 +6,8 @@ server/CMakeFiles
 server/CMakeCache.txt
 server/cmake_install.cmake
 server/Makefile
+server/tmp_files
+server/processed_files
 
 client/node_modules
 client/build

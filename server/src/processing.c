@@ -8,8 +8,12 @@
 #include "stb_image_write.h"
 
 #include "processing.h"
+#include "helpers.h"
+#include "constants.h"
 
-void get_color_sum(char* path, double* color_sum) {
+void classify_by_color(char* path) {
+  double color_sum[3] = { 0, 0, 0 };
+
   int width, height, channels;
   unsigned char* img = stbi_load(path, &width, &height, &channels, 0);
 
@@ -30,5 +34,47 @@ void get_color_sum(char* path, double* color_sum) {
     color_sum[2] += ((double)img[i + 2]) / 255;
   }
 
+  char classified_path[FILES_PATH_LEN];
+  uint8_t max_index = find_max_index(color_sum, 3);
+
+  get_classification_path(classified_path, max_index);
+
+  stbi_write_png(classified_path, width, height, channels, img, width * channels);
+
   stbi_image_free(img);
+}
+
+void get_classification_path(char* dest_path, uint8_t rgb_index) {
+  uint16_t red_images_count = search_files(RED_IMAGES_PATH, NULL);
+  uint16_t green_images_count = search_files(GREEN_IMAGES_PATH, NULL);
+  uint16_t blue_images_count = search_files(BLUE_IMAGES_PATH, NULL);
+
+  char output_path[FILES_PATH_LEN];
+  char file_name[9];
+  uint64_t file_index;
+
+  switch (rgb_index) {
+  case 0:
+    strcpy(output_path, RED_IMAGES_PATH);
+    strcpy(file_name, "red");
+    file_index = red_images_count;
+    break;
+
+  case 1:
+    strcpy(output_path, GREEN_IMAGES_PATH);
+    strcpy(file_name, "green");
+    file_index = green_images_count;
+    break;
+
+  case 2:
+    strcpy(output_path, BLUE_IMAGES_PATH);
+    strcpy(file_name, "blue");
+    file_index = blue_images_count;
+    break;
+
+  default:
+    break;
+  }
+
+  snprintf(dest_path, FILES_PATH_LEN, "%s/%s_%d.png", output_path, file_name, file_index);
 }
