@@ -22,6 +22,21 @@ uint8_t find_max_index(double* array, uint8_t size) {
   return max_index;
 }
 
+int compare_file_size(const void* a, const void* b) {
+  struct File* file_a = (struct File*)a;
+  struct File* file_b = (struct File*)b;
+
+  if (file_a->size < file_b->size) {
+    return -1;
+  }
+  else if (file_a->size > file_b->size) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+
 void create_directory(const char* path) {
   DIR* dir = opendir(path);
 

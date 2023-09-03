@@ -17,6 +17,10 @@ struct File {
 */
 uint8_t find_max_index(double* array, uint8_t size);
 
+void sort_files(struct File* files, uint64_t files_count);
+
+int compare_file_size(const void* a, const void* b);
+
 void create_directory(const char* path);
 
 void delete_file(const char* path);

@@ -22,7 +22,10 @@ void* processing_loop(void* vargp) {
     struct File uploaded_files[PROCESSING_QUEUE_SIZE];
     uint64_t uploaded_files_count = search_files(TMP_FILES_PATH, uploaded_files);
 
+    qsort(uploaded_files, uploaded_files_count, sizeof(struct File), compare_file_size);
+
     sleep(2);
+
     printf("-------------------------------------------------------------\n");
     for (uint8_t i = 0; i < uploaded_files_count; i++) {
       struct File current_file = uploaded_files[i];
