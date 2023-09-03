@@ -1,6 +1,7 @@
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
+#include <string.h>
 #include <stdio.h>
 
 #include "helpers.h"
@@ -21,7 +22,7 @@ uint8_t find_max_index(double* array, uint8_t size) {
   return max_index;
 }
 
-void create_directories(const char* path) {
+void create_directory(const char* path) {
   DIR* dir = opendir(path);
 
   if (dir) {
@@ -50,4 +51,35 @@ uint8_t save_file(char* file_path, const char* binary_data, uint64_t  binary_dat
 
   fclose(file);
   return 0;
+}
+
+uint64_t search_files(const char* path, struct File* files) {
+  DIR* dir = opendir(path);
+
+  if (!dir) {
+    printf("Error opening directory '%s'.\n", path);
+    return 0;
+  }
+
+  struct dirent* entry;
+  struct stat file_stat;
+
+  uint64_t file_index = 0;
+  while ((entry = readdir(dir)) != NULL) {
+    if (entry->d_type == DT_REG) {
+      char file_path[TMP_FILES_PATH_LEN];
+      snprintf(file_path, TMP_FILES_PATH_LEN, "%s/%s", path, entry->d_name);
+
+      if ((files != NULL) && stat(file_path, &file_stat) == 0) {
+        strcpy(files[file_index].path, file_path);
+        files[file_index].size = file_stat.st_size;
+      }
+
+      file_index++;
+    }
+  }
+
+  closedir(dir);
+
+  return file_index;
 }

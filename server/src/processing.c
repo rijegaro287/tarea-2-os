@@ -8,6 +8,7 @@
 #include "stb_image_write.h"
 
 #include "processing.h"
+#include "constants.h"
 
 void get_color_sum(char* path, double* color_sum) {
   int width, height, channels;
