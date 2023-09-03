@@ -47,18 +47,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 
-  processButton.addEventListener('click', () => {
+  processButton.addEventListener('click', async () => {
     if (!fileInput.files) { return; }
 
     const image = fileInput.files[0];
 
     const reader = new FileReader();
-    reader.readAsDataURL(image);
+    reader.readAsArrayBuffer(image);
 
     reader.onload = async () => {
-      const imageBase64 = reader.result as string;
+      let imageArrayBuffer = reader.result as string;
 
-      await sendImage(imageBase64)
+      await sendImage(imageArrayBuffer)
         .then(async (response) => {
           if (response.status !== 200) {
             alert('Error: Could not upload file to server.');
@@ -68,6 +68,5 @@ document.addEventListener('DOMContentLoaded', async () => {
           console.log(responseBody);
         });
     }
-
   });
 });

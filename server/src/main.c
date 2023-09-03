@@ -1,9 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-
-#include "helpers.h"
-#include "processing.h"
-#include "ulfius_server.h"
+#include "http_server.h"
 
 #define SERVER_PORT 3000
 

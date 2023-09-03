@@ -7,11 +7,11 @@ function testAPI() {
   });
 }
 
-function sendImage(imageBase64: string) {
-  return fetch(`${API_URL}/upload/123`, {
+function sendImage(imageArrayBuffer: string) {
+  return fetch(`${API_URL}/upload`, {
     method: 'POST',
     mode: "cors",
-    body: imageBase64
+    body: imageArrayBuffer
   });
 }
 
