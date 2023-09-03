@@ -2,6 +2,9 @@
 #include <ulfius.h>
 
 #include "http_server.h"
+#include "helpers.h"
+
+static uint64_t uploaded_files_count = 0;
 
 int start_server(int port) {
   struct _u_instance instance;
@@ -44,23 +47,15 @@ int callback_upload_file(const struct _u_request* request, struct _u_response* r
   const char* binary_image = (char*)request->binary_body;
   const size_t binary_image_length = request->binary_body_length;
 
-  const char* file_path = "uploaded_image.png";
+  char file_path[40];
+  snprintf(file_path, 40, "tmp_files/uploaded_image_%d.png", uploaded_files_count);
 
-  FILE* file = fopen(file_path, "wb");
-  if (!file) {
-    fprintf(stderr, "Failed to open file for writing: %s\n", file_path);
-
-    ulfius_set_string_body_response(response, 500, "An error occurred while uploading the file!");
+  if (save_file(file_path, binary_image, binary_image_length) == 0) {
+    ulfius_set_string_body_response(response, 200, "File uploaded successfully!");
+    uploaded_files_count++;
   }
   else {
-    // Write the data to the file
-    fwrite(binary_image, 1, binary_image_length, file);
-
-    // Close the file
-    fclose(file);
-
-    // Set the response
-    ulfius_set_string_body_response(response, 200, "File uploaded successfully!");
+    ulfius_set_string_body_response(response, 500, "An error occurred while uploading the file!");
   }
 
   return U_CALLBACK_CONTINUE;
