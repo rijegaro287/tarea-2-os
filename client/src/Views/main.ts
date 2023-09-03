@@ -1,4 +1,4 @@
-import { sendImage, testAPI } from "./request.js";
+import { decodeResponseBody, sendImage, testAPI } from "./request.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
   const uploadButton = document.getElementById('upload-button') as HTMLButtonElement;
@@ -28,11 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       alert('Error: Could not connect to server.');
     }
 
-    const bodyReader = response.body?.getReader();
-    const bodyUIntArray = await bodyReader?.read();
-    const bodyString = new TextDecoder('utf-8').decode(bodyUIntArray?.value);
-
-    console.log(bodyString);
+    const responseBody = await decodeResponseBody(response);
+    console.log(responseBody);
   });
 
 
@@ -50,21 +47,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 
-  processButton.addEventListener('click', async () => {
+  processButton.addEventListener('click', () => {
     if (!fileInput.files) { return; }
 
     const image = fileInput.files[0];
 
-    const imageFormData = new FormData();
-    imageFormData.append('file', image);
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
 
-    await sendImage(imageFormData)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      });
+    reader.onload = async () => {
+      const imageBase64 = reader.result as string;
+
+      await sendImage(imageBase64)
+        .then(async (response) => {
+          if (response.status !== 200) {
+            alert('Error: Could not upload file to server.');
+          }
+
+          const responseBody = await decodeResponseBody(response);
+          console.log(responseBody);
+        });
+    }
+
   });
 });
