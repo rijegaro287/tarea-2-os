@@ -4,9 +4,7 @@
 #include "http_server.h"
 #include "processing.h"
 #include "helpers.h"
-#include "constants.h"
-
-#define SERVER_PORT 3000
+#include "config.h"
 
 void create_directories() {
   create_directory(TMP_FILES_PATH);
@@ -15,14 +13,16 @@ void create_directories() {
   create_directory(RED_IMAGES_PATH);
   create_directory(GREEN_IMAGES_PATH);
   create_directory(BLUE_IMAGES_PATH);
+  create_directory(LOGS_PATH);
 }
 
 void* processing_loop(void* vargp) {
+  sleep(3);
   while (get_server_status() == U_STATUS_RUNNING) {
     struct File uploaded_files[PROCESSING_QUEUE_SIZE];
     uint64_t uploaded_files_count = search_files(TMP_FILES_PATH, uploaded_files);
 
-    sleep(3);
+    sleep(2);
     printf("-------------------------------------------------------------\n");
     for (uint8_t i = 0; i < uploaded_files_count; i++) {
       struct File current_file = uploaded_files[i];
@@ -33,6 +33,7 @@ void* processing_loop(void* vargp) {
       classify_by_color(current_file.path);
 
       delete_file(current_file.path);
+      printf("------------------------------\n");
     }
   }
 
@@ -41,6 +42,10 @@ void* processing_loop(void* vargp) {
 
 int main()
 {
+  init_config();
+
+  sleep(1);
+
   create_directories();
 
   pthread_t thread_id;

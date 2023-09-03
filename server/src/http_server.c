@@ -3,7 +3,7 @@
 
 #include "http_server.h"
 #include "helpers.h"
-#include "constants.h"
+#include "config.h"
 
 static uint64_t uploaded_files_count;
 static struct _u_instance server_instance;

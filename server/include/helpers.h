@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "constants.h"
+#include "config.h"
 
 struct File {
   char path[FILES_PATH_LEN];
