@@ -5,7 +5,7 @@
 #include "constants.h"
 
 struct File {
-  char path[TMP_FILES_PATH_LEN];
+  char path[FILES_PATH_LEN];
   uint64_t size;
 };
 
@@ -19,6 +19,8 @@ uint8_t find_max_index(double* array, uint8_t size);
 
 void create_directory(const char* path);
 
+void delete_file(const char* path);
+
 uint8_t save_file(char* file_path, const char* binary_data, uint64_t  binary_data_length);
 
-uint64_t search_files(const char* path, struct File* files);
+uint16_t search_files(const char* path, struct File* files);

@@ -10,6 +10,7 @@
 
 void create_directories() {
   create_directory(TMP_FILES_PATH);
+  create_directory(PROCESSED_IMAGES_PATH);
   create_directory(EQUALIZED_IMAGES_PATH);
   create_directory(RED_IMAGES_PATH);
   create_directory(GREEN_IMAGES_PATH);
@@ -19,14 +20,18 @@ void create_directories() {
 void* processing_loop(void* vargp) {
   while (get_server_status() == U_STATUS_RUNNING) {
     struct File uploaded_files[PROCESSING_QUEUE_SIZE];
-    uint64_t found_files = search_files(TMP_FILES_PATH, uploaded_files);
+    uint64_t uploaded_files_count = search_files(TMP_FILES_PATH, uploaded_files);
 
     sleep(3);
     printf("-------------------------------------------------------------\n");
-    for (uint8_t i = 0; i < found_files; i++) {
+    for (uint8_t i = 0; i < uploaded_files_count; i++) {
       struct File current_file = uploaded_files[i];
       printf("Processing file: %s\n", current_file.path);
       printf("File size: %ld\n", current_file.size);
+
+      classify_by_color(current_file.path);
+
+      delete_file(current_file.path);
     }
   }
 
@@ -35,14 +40,6 @@ void* processing_loop(void* vargp) {
 
 int main()
 {
-  // double color_sum[3];
-  // get_color_sum("./persona1.jpg", color_sum);
-
-  // uint8_t max_index = find_max_index(color_sum, 3);
-
-  // printf("Red: %f, Green: %f, Blue: %f\n", color_sum[0], color_sum[1], color_sum[2]);
-  // printf("Dominant color: %s\n", max_index == 0 ? "Red" : max_index == 1 ? "Green" : "Blue");
-
   create_directories();
 
   pthread_t thread_id;

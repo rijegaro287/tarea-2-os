@@ -49,8 +49,8 @@ int callback_upload_file(const struct _u_request* request, struct _u_response* r
   const char* binary_image = (char*)request->binary_body;
   const size_t binary_image_length = request->binary_body_length;
 
-  char file_path[TMP_FILES_PATH_LEN];
-  snprintf(file_path, TMP_FILES_PATH_LEN, "%s/uploaded_image_%d.png", TMP_FILES_PATH, uploaded_files_count);
+  char file_path[FILES_PATH_LEN];
+  snprintf(file_path, FILES_PATH_LEN, "%s/uploaded_image_%d.png", TMP_FILES_PATH, uploaded_files_count);
 
   if (save_file(file_path, binary_image, binary_image_length) == 0) {
     ulfius_set_string_body_response(response, 200, "File uploaded successfully!");
