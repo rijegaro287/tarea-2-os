@@ -1,4 +1,4 @@
-import { sendImage, testAPI } from "./request.js";
+import { decodeResponseBody, sendImage, testAPI } from "./request.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
   const uploadButton = document.getElementById('upload-button') as HTMLButtonElement;
@@ -23,10 +23,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     cancelButton.disabled = true;
   }
 
-  testAPI().then((response) => {
+  testAPI().then(async (response) => {
     if (response.status !== 200) {
       alert('Error: Could not connect to server.');
     }
+
+    const responseBody = await decodeResponseBody(response);
+    console.log(responseBody);
   });
 
 
@@ -49,16 +52,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const image = fileInput.files[0];
 
-    const imageFormData = new FormData();
-    imageFormData.append('file', image);
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(image);
 
-    await sendImage(imageFormData)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      });
+    reader.onload = async () => {
+      let imageArrayBuffer = reader.result as string;
+
+      await sendImage(imageArrayBuffer)
+        .then(async (response) => {
+          if (response.status !== 200) {
+            alert('Error: Could not upload file to server.');
+          }
+
+          const responseBody = await decodeResponseBody(response);
+          console.log(responseBody);
+        });
+    }
   });
 });
