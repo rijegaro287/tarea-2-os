@@ -1,8 +1,9 @@
 const API_URL = 'http://localhost:3000';
 
 function testAPI() {
-  return fetch(`${API_URL}`, {
-    method: 'GET'
+  return fetch(`${API_URL}/test`, {
+    method: 'GET',
+    mode: "cors", // no-cors, *cors, same-origin
   });
 }
 

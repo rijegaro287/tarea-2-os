@@ -23,10 +23,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     cancelButton.disabled = true;
   }
 
-  testAPI().then((response) => {
+  testAPI().then(async (response) => {
     if (response.status !== 200) {
       alert('Error: Could not connect to server.');
     }
+
+    const bodyReader = response.body?.getReader();
+    const bodyUIntArray = await bodyReader?.read();
+    const bodyString = new TextDecoder('utf-8').decode(bodyUIntArray?.value);
+
+    console.log(bodyString);
   });
 
 
