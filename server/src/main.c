@@ -29,6 +29,7 @@ void* processing_loop(void* vargp) {
       printf("Processing file: %s\n", current_file.path);
       printf("File size: %ld\n", current_file.size);
 
+      histogramEqualization(current_file.path);
       classify_by_color(current_file.path);
 
       delete_file(current_file.path);
