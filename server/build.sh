@@ -2,9 +2,11 @@ clear
 cmake .
 make
 
-sudo chmod +x ./build/ImageServer
+sudo rm -rf /home/$USER/Documents/ImageServer
 sudo mkdir -p /home/$USER/Documents/ImageServer
 sudo cp ./build/ImageServer /home/$USER/Documents/ImageServer/ImageServer
+sudo cp ./config.conf /home/$USER/Documents/ImageServer/config.conf
+sudo chmod 777 -R /home/$USER/Documents/ImageServer
 
 sudo touch /home/$USER/Documents/ImageServer/run.sh
 sudo chmod 777 /home/$USER/Documents/ImageServer/run.sh

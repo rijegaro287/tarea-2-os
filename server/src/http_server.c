@@ -8,6 +8,13 @@
 static uint64_t uploaded_files_count;
 static struct _u_instance server_instance;
 
+void cleanup_server() {
+  ulfius_stop_framework(&server_instance);
+  ulfius_clean_instance(&server_instance);
+
+  printf("Server stopped\n");
+}
+
 int start_server(int port) {
   uploaded_files_count = search_files(TMP_FILES_PATH, NULL);
 
@@ -25,17 +32,13 @@ int start_server(int port) {
   if (ulfius_start_framework(&server_instance) == U_OK) {
     printf("Started server on: http://localhost:%d\n", server_instance.port);
 
-    // Wait for the user to press <enter> on the console to quit the application
-    getchar();
+    atexit(cleanup_server);
+
+    while (1);
   }
   else {
     fprintf(stderr, "Error starting framework\n");
   }
-
-  ulfius_stop_framework(&server_instance);
-  ulfius_clean_instance(&server_instance);
-
-  printf("Server stopped\n");
 
   return 0;
 }
