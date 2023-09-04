@@ -24,9 +24,6 @@ void* processing_loop(void* vargp) {
 
     qsort(uploaded_files, uploaded_files_count, sizeof(struct File), compare_file_size);
 
-    sleep(2);
-
-    printf("-------------------------------------------------------------\n");
     for (uint8_t i = 0; i < uploaded_files_count; i++) {
       struct File current_file = uploaded_files[i];
       printf("Processing file: %s\n", current_file.path);
@@ -37,6 +34,8 @@ void* processing_loop(void* vargp) {
 
       delete_file(current_file.path);
       printf("------------------------------\n");
+
+      sleep(1);
     }
   }
 

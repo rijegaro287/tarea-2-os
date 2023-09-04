@@ -90,7 +90,7 @@ uint16_t search_files(const char* path, struct File* files) {
   struct stat file_stat;
 
   uint16_t file_index = 0;
-  while ((entry = readdir(dir)) != NULL) {
+  while ((entry = readdir(dir)) != NULL && file_index < PROCESSING_QUEUE_SIZE) {
     if (entry->d_type == DT_REG) {
       char file_path[FILES_PATH_LEN];
       snprintf(file_path, FILES_PATH_LEN, "%s/%s", path, entry->d_name);

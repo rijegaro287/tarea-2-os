@@ -19,7 +19,7 @@ void histogramEqualization(char* path)
 
   if (img == NULL) {
     printf("Error in loading the image\n");
-    exit(1);
+    return;
   }
 
   // Calculate histograms for each color channel
@@ -82,12 +82,12 @@ void classify_by_color(char* path)
 
   if (img == NULL) {
     printf("Error in loading the image\n");
-    exit(1);
+    return;
   }
 
   if (channels > 3) {
     printf("Image has more than 3 channels\n");
-    exit(1);
+    return;
   }
 
   uint64_t img_size = width * height * channels;
