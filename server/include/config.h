@@ -19,4 +19,8 @@ extern char BLUE_IMAGES_PATH[FILES_PATH_LEN];
 
 extern char LOGS_PATH[FILES_PATH_LEN];
 
+/**
+ * @brief Initializes the configuration of the server.
+ * @return 0 if the configuration was initialized successfully, 1 otherwise.
+*/
 uint8_t init_config();

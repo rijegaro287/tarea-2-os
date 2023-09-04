@@ -6,6 +6,9 @@
 #include "helpers.h"
 #include "config.h"
 
+/**
+ * @brief Creates the directories needed for the server to work.
+*/
 void create_directories() {
   create_directory(TMP_FILES_PATH);
   create_directory(PROCESSED_IMAGES_PATH);
@@ -16,6 +19,10 @@ void create_directories() {
   create_directory(LOGS_PATH);
 }
 
+/**
+ * @brief Image processing loop that runs in a separate thread.
+ * @param vargp Unused. Set by pthread_create.
+*/
 void* processing_loop(void* vargp) {
   sleep(3);
   while (get_server_status() == U_STATUS_RUNNING) {
@@ -26,16 +33,16 @@ void* processing_loop(void* vargp) {
 
     for (uint8_t i = 0; i < uploaded_files_count; i++) {
       struct File current_file = uploaded_files[i];
-      printf("Processing file: %s\n", current_file.path);
-      printf("File size: %ld\n", current_file.size);
+      // printf("Processing file: %s\n", current_file.path);
+      // printf("File size: %ld\n", current_file.size);
 
       histogramEqualization(current_file.path);
       classify_by_color(current_file.path);
 
       delete_file(current_file.path);
-      printf("------------------------------\n");
+      // printf("------------------------------\n");
 
-      sleep(1);
+      // sleep(1);
     }
   }
 

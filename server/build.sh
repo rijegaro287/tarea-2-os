@@ -22,6 +22,7 @@ After=network.target
 [Service]
 ExecStart=/home/$USER/Documents/ImageServer/run.sh
 Restart=always
+TimeoutStopSec=infinity
 
 [Install]
 WantedBy=multi-user.target" > ImageServer.service

@@ -81,12 +81,12 @@ void classify_by_color(char* path)
   unsigned char* img = stbi_load(path, &width, &height, &channels, 0);
 
   if (img == NULL) {
-    printf("Error in loading the image\n");
+    printf("Error in loading the image '%s'\n", path);
     return;
   }
 
   if (channels > 3) {
-    printf("Image has more than 3 channels\n");
+    printf("Image '%s' has more than 3 channels\n", path);
     return;
   }
 

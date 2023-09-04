@@ -8,13 +8,6 @@
 static uint64_t uploaded_files_count;
 static struct _u_instance server_instance;
 
-void cleanup_server() {
-  ulfius_stop_framework(&server_instance);
-  ulfius_clean_instance(&server_instance);
-
-  printf("Server stopped\n");
-}
-
 int start_server(int port) {
   uploaded_files_count = search_files(TMP_FILES_PATH, NULL);
 
@@ -28,7 +21,6 @@ int start_server(int port) {
   ulfius_add_endpoint_by_val(&server_instance, "GET", "/test", NULL, 0, &callback_test, NULL);
   ulfius_add_endpoint_by_val(&server_instance, "POST", "/upload", NULL, 0, &callback_upload_file, NULL);
 
-  // Start the framework
   if (ulfius_start_framework(&server_instance) == U_OK) {
     printf("Started server on: http://localhost:%d\n", server_instance.port);
 
@@ -41,6 +33,13 @@ int start_server(int port) {
   }
 
   return 0;
+}
+
+void cleanup_server() {
+  ulfius_stop_framework(&server_instance);
+  ulfius_clean_instance(&server_instance);
+
+  printf("Server stopped\n");
 }
 
 int callback_test(const struct _u_request* request, struct _u_response* response, void* user_data) {

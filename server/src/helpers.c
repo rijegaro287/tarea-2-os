@@ -56,7 +56,7 @@ void create_directory(const char* path) {
 
 void delete_file(const char* path) {
   if (remove(path) == 0) {
-    printf("File '%s' deleted successfully.\n", path);
+    // printf("File '%s' deleted successfully.\n", path);
     return;
   }
 

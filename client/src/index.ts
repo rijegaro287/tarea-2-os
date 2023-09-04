@@ -6,7 +6,6 @@ import cors from 'cors';
 
 dotenv.config({ path: path.resolve('./build/.env') });
 
-
 const SERVER_PORT: number = Number(process.env.SERVER_PORT) || 8080;
 
 const app: Express = express();
