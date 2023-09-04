@@ -46,8 +46,6 @@ int main()
 {
   init_config();
 
-  sleep(1);
-
   create_directories();
 
   pthread_t thread_id;

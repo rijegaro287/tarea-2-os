@@ -9,6 +9,7 @@ server/Makefile
 server/tmp_files
 server/processed_files
 server/logs
+server/*.service
 
 client/node_modules
 client/build
